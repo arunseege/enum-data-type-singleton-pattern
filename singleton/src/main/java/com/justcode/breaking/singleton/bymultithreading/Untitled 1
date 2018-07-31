@@ -1,0 +1,16 @@
+in theory double check locking is broken bcz java compiler specification allows run time to
+publish half initialized variables to be available to other threads how?
+
+suppose 2 threads ,when thread 1 creates and is executing line "soleInstance = new Singletonmake();" 
+during that time if thread2 comes and checks for null (if during this time the variables are half initialized
+) then it will returns that half initialized variable itself(bcz it is published by jvm even when it is half-initialized) 
+and it may lead to bug 
+and appl. corrupts which is difficult to figure out.
+
+therefore this issue is addressed using volatile keyword.
+here change to volatile variable is published only when initialization is complete
+and hence thread 2 will still half initialized variable null.
+
+write to valatile variable happens first before read hence threads wont read half baked variable as full
+
+
